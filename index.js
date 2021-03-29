@@ -1,24 +1,23 @@
 const express = require('express')
 const app = express()
- 
-// app.get('/', function (req, res) {
-//   res.send('Hello World')
-// })
-// app.get('/', function (req, res) {
-//     res.sendStatus(200)
-//   })
+const t =new Date();
 
-  app.get('/', (req, res) => {
+
+app.get('/', (req, res) => {
     res.send('ok')
   })
-// app.use((req,res,next)=>{
-//     console.log('Middlwarew');
-//     next();
-// }) 
-
-//   app.use((req,res,next)=>{
-//       res.send('<form method="POST"><input type="text" name="username"><button type = submit>Create user</button></formM')
-//   })
-
-
+  app.get('/test', (req, res) => {
+    res.send(
+        {
+             status:200,
+             message:"okkk"
+        }
+    )
+  })
+  app.get('/time', (req, res) => {
+    res.send({
+        status:200,
+        message:`${t.getHours()+":" + t.getSeconds()}`
+   }   )
+  })
 app.listen(3000)
