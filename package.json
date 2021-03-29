@@ -1,0 +1,26 @@
+{
+  "name": "moviedb",
+  "version": "1.0.0",
+  "description": "or CMDB for short",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dania-c/Codi_MovieDb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dania-c/Codi_MovieDb/issues"
+  },
+  "homepage": "https://github.com/Dania-c/Codi_MovieDb#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
