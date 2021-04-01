@@ -39,6 +39,7 @@ app.get('/hello/:id', function (req, res) {
     if(req.query.s){
     res.status(200).send("data : "+req.query.s);
       }else{
+        res.sendStatus(500); 
         res.send( {status:500, error:true, message:"you have to provide a word to search for "});
         
     }
@@ -90,9 +91,9 @@ app.get('/movies/read/by-title',  (req, res)=> {
 //
 app.get('/movies/read/id/:id',  (req, res)=> {
 
-var byTitle=[...movies];
+var byId=[...movies];
 
-if (byTitle.length>=req.params.id) {res.status(200).send( byTitle[req.params.id-1])}
+if (byId.length>=req.params.id) {res.status(200).send( byId[req.params.id-1])}
 else
 {
   res.sendStatus(404); 
