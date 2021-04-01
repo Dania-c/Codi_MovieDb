@@ -15,18 +15,11 @@ app.get('/', (req, res) => {
     res.send('ok')
   })
   app.get('/test', (req, res) => {
-    res.send(
-        {
-             status:200,
-             message:"okkk"
-        }
-    )
+    res.status(200).send("okkk")
   })
   app.get('/time', (req, res) => {
-    res.send({
-        status:200,
-        message:`${t.getHours()+":" + t.getSeconds()}`
-   }   )
+    // res.status(200).send(`${t.getHours()+":" + t.getSeconds()}`)
+    res.status(200).send(t.getHours()+":" + t.getSeconds())
   })
 
 
@@ -37,16 +30,17 @@ app.get('/', (req, res) => {
 //    }   )
 //   })
 app.get('/hello/:id', function (req, res) {
-    res.send({status:200, message:"Hello , "+req.params.id});
+    res.status(200).send("Hello , "+req.params.id);
   });
 
 
   app.get('/search',function(req,res){
 
     if(req.query.s){
-    res.send({status:200, message:"data : "+req.query.s});
+    res.status(200).send("data : "+req.query.s);
       }else{
         res.send( {status:500, error:true, message:"you have to provide a word to search for "});
+        
     }
   });
 //create
@@ -54,13 +48,10 @@ app.get('/hello/:id', function (req, res) {
     res.send({status:200, message:"create , "});
   });
 
+//read
+
  app.get('/movies/read', (req, res) => {
-  res.send(
-  {
-   status:200,
-   data:movies
-  }
-)
+  res.status(200).send(movies)
 })
 // sort by date
 
@@ -70,7 +61,7 @@ app.get('/movies/read/by-date',  (req, res)=> {
   
   byDate.sort((a,b)=>{return a.year - b.year});
   
-  res.send( {status:200,data:byDate})
+  res.status(200).send(byDate)
 })
 
 // sort by rate
@@ -81,7 +72,7 @@ app.get('/movies/read/by-rating',  (req, res)=> {
   
   byrating_desc.sort((a,b)=>{return b.rating - a.rating});
   
-  res.send( {status:200,data:byrating_desc})
+  res.status(200).send(byrating_desc)
 })
 
 // sort by title
@@ -92,8 +83,11 @@ app.get('/movies/read/by-title',  (req, res)=> {
   
   byTitle.sort(( a,b)=>{return a.title.toLowerCase().localeCompare(b.title.toLowerCase())});
   
-  res.send( {status:200,data:byTitle})
+  res.status(200).send(byTitle)
 })
+
+
+
 
  //end read
   app.get('/movies/update', (req, res)=> {
