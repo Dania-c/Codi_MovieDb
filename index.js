@@ -95,7 +95,8 @@ var byTitle=[...movies];
 if (byTitle.length>=req.params.id) {res.status(200).send( byTitle[req.params.id-1])}
 else
 {
-   res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist`})
+  res.sendStatus(404); 
+  res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist`})
   //res.status(404).send(err.message)
 }
 })
