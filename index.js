@@ -112,6 +112,8 @@ else
   app.get('/movies/update', (req, res)=> {
     res.send({status:200, message:"update , "});
   });
+
+  
   app.get('/movies/delete',  (req, res) => {
     res.send({status:200, message:"delete , "});
   });
@@ -138,13 +140,14 @@ app.use((error, req, res, next) => {
   // add
   app.get('/movies/add', (req, res) =>
    { if (!req.query.title || !req.query.year  ) 
-    { return res.status(403).send({ success: 'false', message: 'you cannot create a movie without providing a title and a year', }); 
+    { return res.status(403).send({ error: 'true', message: 'you cannot create a movie without providing a title and a year', }); 
   } else if (req.query.year.toString().length != 4 || isNaN(req.query.year )) {
-    return res.status(403).send({ success: 'false', message: 'Enter a valid year year' });
+    return res.status(403).send({ error: 'true', message: 'Enter a valid year year' });
   }
      const movie = { title: req.query.title, year: parseInt(req.query.year), rating: !req.query.rating ? 4 : parseInt(req.query.rating) };
    movies.push(movie); 
-   return res.status(200).send({ success: 'true', message: 'movie added successfully' });
+   return res.status(200).send(movies);
+   
   });
 
 
