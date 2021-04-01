@@ -86,7 +86,19 @@ app.get('/movies/read/by-title',  (req, res)=> {
   res.status(200).send(byTitle)
 })
 
+// read by id 
+//
+app.get('/movies/read/id/:id',  (req, res)=> {
 
+var byTitle=[...movies];
+
+if (byTitle.length>=req.params.id) {res.status(200).send( byTitle[req.params.id-1])}
+else
+{
+   res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist`})
+  //res.status(404).send(err.message)
+}
+})
 
 
  //end read
