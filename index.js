@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const t =new Date();
 const router = express.Router();
+const bodyParser = require('body-parser');
+
+
 const movies = [
   { title: 'Jaws', year: 1975, rating: 8 },
   { title: 'Avatar', year: 2009, rating: 7.8 },
@@ -115,11 +118,11 @@ else
 
 // err
 
-app.use((req, res, next) => {
-  const error = new Error('Not found!!!!!!!!!!!!!!!');
-  error.status = 404;
-  next(error);
-})
+// app.use((req, res, next) => {
+//   const error = new Error('Not found!!!!!!!!!!!!!!!');
+//   error.status = 404;
+//   next(error);
+// })
 
 
 app.use((error, req, res, next) => {
@@ -132,7 +135,20 @@ app.use((error, req, res, next) => {
 });
 
 
-  
+  // add
+  app.get('/movies/add', (req, res) =>
+   { if (!req.query.title || !req.query.year  ) 
+    { return res.status(403).send({ success: 'false', message: 'you cannot create a movie without providing a title and a year', }); 
+  } else if (req.query.year.toString().length != 4 || isNaN(req.query.year )) {
+    return res.status(403).send({ success: 'false', message: 'Enter a valid year year' });
+  }
+     const movie = { title: req.query.title, year: parseInt(req.query.year), rating: !req.query.rating ? 4 : parseInt(req.query.rating) };
+   movies.push(movie); 
+   return res.status(200).send({ success: 'true', message: 'movie added successfully' });
+  });
+
+
+
 
 
 app.listen(3000)
