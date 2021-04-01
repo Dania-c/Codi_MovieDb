@@ -5,7 +5,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 
 
-const movies = [
+let movies = [
   { title: 'Jaws', year: 1975, rating: 8 },
   { title: 'Avatar', year: 2009, rating: 7.8 },
   { title: 'Brazil', year: 1985, rating: 8 },
@@ -114,9 +114,18 @@ else
   });
 
   
-  app.get('/movies/delete',  (req, res) => {
-    res.send({status:200, message:"delete , "});
-  });
+  app.get('/movies/delete/:id',  (req, res) => {
+    if (movies.length>=req.params.id) {
+      const newList =movies.slice(0, req.params.id -1).concat(movies.slice(req.params.id , movies.length)) // because the user doesn't know that index starts from 0
+      movies=newList;
+      res.status(200).send(movies)
+    } else
+{
+    res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist!!`})
+  
+}
+})
+
 
 // err
 
