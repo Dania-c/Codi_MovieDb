@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 //     res.send({
 //         status:200,
 //         message:"Hello , "+req.params.id
-//    }   )
+//    }   ),,ll
 //   })
 app.get('/hello/:id', function (req, res) {
     res.status(200).send("Hello , "+req.params.id);
@@ -96,8 +96,10 @@ var byId=[...movies];
 if (byId.length>=req.params.id) {res.status(200).send( byId[req.params.id-1])}
 else
 {
-  res.sendStatus(404); 
-  res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist`})
+  //  res.sendStatus(404); 
+  // const error = new Error(`the movie ${req.params.id} does not exist`);
+  //   error.status = 404;
+  res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist!!`})
   //res.status(404).send(err.message)
 }
 })
@@ -110,6 +112,27 @@ else
   app.get('/movies/delete',  (req, res) => {
     res.send({status:200, message:"delete , "});
   });
+
+// err
+
+app.use((req, res, next) => {
+  const error = new Error('Not found!!!!!!!!!!!!!!!');
+  error.status = 404;
+  next(error);
+})
+
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+      error: {
+          message: error.message 
+      }
+  });
+});
+
+
+  
 
 
 app.listen(3000)
