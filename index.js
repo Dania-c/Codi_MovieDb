@@ -109,11 +109,33 @@ else
 
 
  //end read
-  app.get('/movies/update', (req, res)=> {
-    res.send({status:200, message:"update , "});
+
+ //update
+//  - With Express, make it so that when the url `/movies/update/<ID>?title=<NEW_TITLE>`, the movie designed 
+// by `<ID>` gets it's title changed to `<NEW_TITLE>`. Return the modified array of movies.
+// - With Express, make it so that when the url `/movies/update/<ID>?title=<NEW_TITLE>&rating=<NEW_RATING>`,
+//  the movie designed by `<ID>` gets its rating changed to `<NEW_RATING>`, and its title to `<NEW_TITLE>`. 
+// If a user provides any of `title`, `rating`, or `year`, the movie should change to reflect those modifications.
+//  Fields that the user did *not* provide should not change. In the example here, the `year` of the movie should *not* change, 
+//  as the user only provided `title` and `rating`.
+// - commit ("step 10") 
+  app.get('/movies/update/:id', (req, res)=> {
+    if (movies.length>=req.params.id) {
+      
+
+      if (req.query.title){movies[req.params.id -1].title = req.query.title}
+      if (req.query.rating){movies[req.params.id -1].rating = req.query.rating}
+      if (req.query.year){movies[req.params.id -1].year = req.query.year}
+
+      res.status(200).send(movies)
+    } else
+{
+    res.send( {status:404,error:true,message:`the movie ${req.params.id} does not exist!!`})
+  
+}
   });
 
-  
+  // delete
   app.get('/movies/delete/:id',  (req, res) => {
     if (movies.length>=req.params.id) {
       const newList =movies.slice(0, req.params.id -1).concat(movies.slice(req.params.id , movies.length)) // because the user doesn't know that index starts from 0
