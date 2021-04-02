@@ -111,17 +111,9 @@ else
  //end read
 
  //update
-//  - With Express, make it so that when the url `/movies/update/<ID>?title=<NEW_TITLE>`, the movie designed 
-// by `<ID>` gets it's title changed to `<NEW_TITLE>`. Return the modified array of movies.
-// - With Express, make it so that when the url `/movies/update/<ID>?title=<NEW_TITLE>&rating=<NEW_RATING>`,
-//  the movie designed by `<ID>` gets its rating changed to `<NEW_RATING>`, and its title to `<NEW_TITLE>`. 
-// If a user provides any of `title`, `rating`, or `year`, the movie should change to reflect those modifications.
-//  Fields that the user did *not* provide should not change. In the example here, the `year` of the movie should *not* change, 
-//  as the user only provided `title` and `rating`.
-// - commit ("step 10") 
-  app.get('/movies/update/:id', (req, res)=> {
+
+  app.put('/movies/:id', (req, res)=> {
     if (movies.length>=req.params.id) {
-      
 
       if (req.query.title){movies[req.params.id -1].title = req.query.title}
       if (req.query.rating){movies[req.params.id -1].rating = req.query.rating}
@@ -136,7 +128,7 @@ else
   });
 
   // delete
-  app.get('/movies/delete/:id',  (req, res) => {
+  app.delete('/movies/:id',  (req, res) => {
     if (movies.length>=req.params.id) {
       const newList =movies.slice(0, req.params.id -1).concat(movies.slice(req.params.id , movies.length)) // because the user doesn't know that index starts from 0
       movies=newList;
@@ -169,7 +161,7 @@ app.use((error, req, res, next) => {
 
 
   // add
-  app.get('/movies/add', (req, res) =>
+  app.post('/movies', (req, res) =>
    { if (!req.query.title || !req.query.year  ) 
     { return res.status(403).send({ error: 'true', message: 'you cannot create a movie without providing a title and a year', }); 
   } else if (req.query.year.toString().length != 4 || isNaN(req.query.year )) {
